@@ -1,5 +1,6 @@
 package com.aqwas.trendingrepositories.core.data.module
 
+import com.aqwas.trendingrepositories.BuildConfig
 import com.aqwas.trendingrepositories.core.data.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -22,7 +23,7 @@ object NetworkModule {
         return Retrofit.Builder().apply {
             addConverterFactory(GsonConverterFactory.create())
             client(okHttp)
-            baseUrl("")
+            baseUrl(BuildConfig.API_BASE_URL)
         }.build()
     }
 

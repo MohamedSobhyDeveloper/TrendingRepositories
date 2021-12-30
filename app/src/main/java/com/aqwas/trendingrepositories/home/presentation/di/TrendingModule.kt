@@ -17,13 +17,13 @@ class TrendingModule {
 
     @Singleton
     @Provides
-    fun provideLoginApi(retrofit: Retrofit): TrendingService {
+    fun provideTrendingApi(retrofit: Retrofit): TrendingService {
         return retrofit.create(TrendingService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideLoginRepository(trendingService: TrendingService): TrendingRepository {
+    fun provideTrendingRepository(trendingService: TrendingService): TrendingRepository {
         return TrendingRepositoryImpl(trendingService)
     }
 
