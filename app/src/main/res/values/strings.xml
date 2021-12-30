@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TrendingRepositories</string>
+    <string name="check_internet_connections">Check Internet Connections</string>
 </resources>
