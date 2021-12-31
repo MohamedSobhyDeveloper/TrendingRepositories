@@ -1,7 +1,7 @@
 # Trending Repositories
 I used the following technologies to make that task :
 ## Technology 
-used [Dagger Hilt, coroutines, clean architecture, Mvvm, StateFlow, clean code,  Glide,Retrofit, and more..]
+used [Dagger Hilt, coroutines, clean architecture, Mvvm, StateFlow, clean code,  Glide,Retrofit,Shimmer for loading and more..]
 
 
 
