@@ -86,7 +86,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/noInternetTV"
+            android:id="@+id/tvNoInternet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -100,7 +100,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ivNoInternet" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ivErrorStatus"
+            android:id="@+id/tvErrorStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -109,10 +109,10 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/noInternetTV" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNoInternet" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/retry_btn"
+            android:id="@+id/retryBtn"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

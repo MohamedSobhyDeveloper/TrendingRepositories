@@ -18,6 +18,8 @@ class TrendingListViewModel @Inject constructor(private val trendingUseCase: Tre
         MutableStateFlow<RepositoryListState>(RepositoryListState.Init)
     val TrendingRepositoryState: StateFlow<RepositoryListState> get() = TrendingRepositoryState_
 
+    var isScreenLoaded = false
+
     fun getTrendingRepositoryList() {
         viewModelScope.launch {
             trendingUseCase.execute()
@@ -26,7 +28,7 @@ class TrendingListViewModel @Inject constructor(private val trendingUseCase: Tre
                 }
                 .catch { exception ->
                     hideLoading()
-                    showToast(exception.message.toString(), exception is UnknownHostException)
+                    ShowException(exception.message.toString(), exception is UnknownHostException)
                 }
                 .collect {
                     hideLoading()
@@ -56,15 +58,15 @@ class TrendingListViewModel @Inject constructor(private val trendingUseCase: Tre
         TrendingRepositoryState_.value = RepositoryListState.IsLoading(false)
     }
 
-    private fun showToast(message: String, isConnectionError: Boolean) {
-        TrendingRepositoryState_.value = RepositoryListState.ShowToast(message, isConnectionError)
+    private fun ShowException(message: String, isConnectionError: Boolean) {
+        TrendingRepositoryState_.value = RepositoryListState.ShowException(message, isConnectionError)
     }
 }
 
 sealed class RepositoryListState {
     object Init : RepositoryListState()
     data class IsLoading(val isLoading: Boolean) : RepositoryListState()
-    data class ShowToast(val message: String, val isConnectionError: Boolean) :
+    data class ShowException(val message: String, val isConnectionError: Boolean) :
         RepositoryListState()
 
     data class SuccessResponse(val repositoryListResponseRemote: List<ModelTrendingRepositoriesRemote>?) :

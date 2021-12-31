@@ -10,8 +10,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.aqwas.trendingrepositories.R
 import com.aqwas.trendingrepositories.core.presentation.base.BaseActivity
-import com.aqwas.trendingrepositories.core.presentation.extensions.showGenericAlertDialog
-import com.aqwas.trendingrepositories.core.presentation.extensions.showToast
 import com.aqwas.trendingrepositories.databinding.ActivityMainBinding
 import com.aqwas.trendingrepositories.home.data.responseremote.ModelTrendingRepositoriesRemote
 import com.aqwas.trendingrepositories.home.domain.annotation.SortStatus
@@ -37,8 +35,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         setUpTrendingRepository()
         addListenersOnViews()
         observeStateFlow(SortStatus.SORT_DEFAULT)
-        viewModel.getTrendingRepositoryList()
-
+        if (viewModel.isScreenLoaded.not()) {
+            viewModel.getTrendingRepositoryList()
+        }
     }
 
     private fun initialize() {
@@ -47,13 +46,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun setUpTrendingRepository() {
         binding.rvTrendingRepository.adapter = adapter
-
     }
 
     private fun addListenersOnViews() {
         binding.swipeToRefresh.setOnRefreshListener {
             observeStateFlow(SortStatus.SORT_DEFAULT)
             binding.swipeToRefresh.isRefreshing = false
+        }
+
+        binding.retryBtn.setOnClickListener {
+            binding.layoutError.isVisible=false
+            viewModel.getTrendingRepositoryList()
         }
     }
 
@@ -67,7 +70,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun handleStateChange(state: RepositoryListState, sortStatus: Int) {
         when (state) {
             is RepositoryListState.Init -> Unit
-            is RepositoryListState.ErrorResponse -> handleErrorLogin(
+            is RepositoryListState.ErrorResponse -> handleError(
                 state.errorCode,
                 state.errorMessage
             )
@@ -75,7 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 state.repositoryListResponseRemote,
                 sortStatus
             )
-            is RepositoryListState.ShowToast -> showToast(
+            is RepositoryListState.ShowException -> handleException(
                 state.message,
                 state.isConnectionError
             )
@@ -85,6 +88,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun handleSuccess(list: List<ModelTrendingRepositoriesRemote>?, sortStatus: Int) {
+        binding.swipeToRefresh.isVisible = true
+        binding.layoutError.isVisible = false
+        binding.layoutShimmer.isVisible = false
+        binding.layoutShimmer.stopShimmer()
         when (sortStatus) {
             SortStatus.SORT_DEFAULT -> adapter.submitList(list)
             SortStatus.SORT_NAME -> {
@@ -99,11 +106,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
+        viewModel.isScreenLoaded = true
+
     }
 
+    private fun handleError(errorCode: Int, errorMessage: String) {
+        binding.swipeToRefresh.isVisible = false
+        binding.layoutError.isVisible = true
+    }
 
-    private fun handleErrorLogin(errorCode: Int, errorMessage: String) {
-        showGenericAlertDialog(errorMessage)
+    private fun handleException(message: String, connectionError: Boolean) {
+        binding.swipeToRefresh.isVisible = false
+        binding.layoutError.isVisible = true
     }
 
     private fun handleLoading(isLoading: Boolean) {
