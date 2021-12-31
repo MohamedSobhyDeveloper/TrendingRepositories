@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">TrendingRepositories</string>
     <string name="check_internet_connections">Check Internet Connections</string>
+    <string name="sort_by_star">Sort by star</string>
+    <string name="sort_by_name">Sort by name</string>
 </resources>

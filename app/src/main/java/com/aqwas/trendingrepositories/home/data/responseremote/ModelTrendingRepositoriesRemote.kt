@@ -10,8 +10,8 @@ class ModelTrendingRepositoriesRemote(
     @SerializedName("description") var description: String?,
     @SerializedName("language") var language: String?,
     @SerializedName("languageColor") var languageColor: String?,
-    @SerializedName("stars") var stars: Int,
-    @SerializedName("forks") var forks: Int,
+    @SerializedName("stars") var stars: String?,
+    @SerializedName("forks") var forks: String?,
     @SerializedName("currentPeriodStars") var currentPeriodStars: Int,
 )
 

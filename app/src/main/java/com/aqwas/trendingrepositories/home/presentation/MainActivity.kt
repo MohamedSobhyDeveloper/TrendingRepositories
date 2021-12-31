@@ -1,15 +1,19 @@
 package com.aqwas.trendingrepositories.home.presentation
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.aqwas.trendingrepositories.R
 import com.aqwas.trendingrepositories.core.presentation.base.BaseActivity
 import com.aqwas.trendingrepositories.core.presentation.extensions.showGenericAlertDialog
 import com.aqwas.trendingrepositories.core.presentation.extensions.showToast
 import com.aqwas.trendingrepositories.databinding.ActivityMainBinding
 import com.aqwas.trendingrepositories.home.data.responseremote.ModelTrendingRepositoriesRemote
+import com.aqwas.trendingrepositories.home.presentation.adapter.AdapterTrendingRepository
 import com.aqwas.trendingrepositories.home.presentation.viewmodel.RepositoryListState
 import com.aqwas.trendingrepositories.home.presentation.viewmodel.TrendingListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,15 +23,27 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
+    private val adapter: AdapterTrendingRepository by lazy {
+        AdapterTrendingRepository()
+    }
     private val viewModel by viewModels<TrendingListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initialize()
+        setUpTrendingRepository()
         addListenersOnViews()
         observeStateFlow()
         viewModel.getTrendingRepositoryList()
+
+    }
+
+    private fun setUpTrendingRepository() {
+        binding.rvTrendingRepository.adapter = adapter
+
+    }
+
+    private fun addListenersOnViews() {
 
     }
 
@@ -56,6 +72,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun handleSuccess(list: List<ModelTrendingRepositoriesRemote>?) {
+        adapter.submitList(list)
     }
 
 
@@ -72,11 +89,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     }
 
-    private fun addListenersOnViews() {
-
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.sort_menu, menu)
+        return true
     }
 
-    private fun initialize() {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        if (itemId == R.id.sortByName) {
+            return true
+        } else if (itemId == R.id.sortByStar) {
 
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
+
 }

@@ -1,7 +1,9 @@
 package com.aqwas.trendingrepositories.core.presentation.extensions
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 
 fun Context.hideKeyboard(view: View?) = view?.let {
@@ -11,3 +13,4 @@ fun Context.hideKeyboard(view: View?) = view?.let {
     }
 }
 
+val ViewGroup.layoutInflater: LayoutInflater get() = LayoutInflater.from(this.context)
