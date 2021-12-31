@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
-    android:background="?selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="0dp"
     app:cardElevation="10dp">
@@ -14,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?selectableItemBackground"
         android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView

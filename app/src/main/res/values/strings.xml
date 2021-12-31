@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">TrendingRepositories</string>
     <string name="check_internet_connections">Check Internet Connections</string>
-    <string name="sort_by_star">Sort by star</string>
+    <string name="sort_by_star">Sort by stars</string>
     <string name="sort_by_name">Sort by name</string>
+    <string name="retry">Retry</string>
+    <string name="offline_mode">Offline Mode</string>
+    <string name="something_went_wrong">Something went wrong..</string>
+    <string name="an_alien_is_probably_blocking_your_signal">An alien is probably blocking your signal</string>
 </resources>

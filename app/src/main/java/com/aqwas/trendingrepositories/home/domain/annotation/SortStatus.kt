@@ -16,3 +16,4 @@ annotation class SortStatus {
         const val SORT_STAR = 3
     }
 }
+
