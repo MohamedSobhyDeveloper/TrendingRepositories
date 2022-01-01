@@ -1,4 +1,4 @@
-package com.aqwas.trendingrepositories.usecase
+package com.aqwas.trendingrepositories.domain
 
 import org.mockito.Mockito
 import org.mockito.stubbing.OngoingStubbing

@@ -1,4 +1,4 @@
-package com.aqwas.trendingrepositories.ui
+package com.aqwas.trendingrepositories.presentation.ui
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.core.app.ActivityScenario

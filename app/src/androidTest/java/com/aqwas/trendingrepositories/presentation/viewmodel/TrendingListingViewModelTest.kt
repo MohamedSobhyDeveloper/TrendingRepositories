@@ -1,16 +1,18 @@
-package com.aqwas.trendingrepositories.viewmodel
+package com.aqwas.trendingrepositories.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aqwas.trendingrepositories.core.presentation.base.BaseResult
 import com.aqwas.trendingrepositories.home.data.responseremote.ModelTrendingRepositoriesRemote
 import com.aqwas.trendingrepositories.home.domain.interactor.TrendingUseCase
+import com.aqwas.trendingrepositories.home.presentation.viewmodel.RepositoryListState
 import com.aqwas.trendingrepositories.home.presentation.viewmodel.TrendingListViewModel
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,16 +33,18 @@ class TrendingListingViewModelTest {
     @Mock
     private lateinit var usecase: TrendingUseCase
 
+    private lateinit var trendingViewModel: TrendingListViewModel
+
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
+        trendingViewModel = TrendingListViewModel(usecase)
 
     }
 
     @Test
     fun test_fetchTrendingList() = runBlocking {
         val retroResponse = ArrayList<ModelTrendingRepositoriesRemote>()
-        val trendingViewModel = TrendingListViewModel(usecase)
         val response = BaseResult.DataState(retroResponse)
         val channel = Channel<BaseResult<List<ModelTrendingRepositoriesRemote>>>()
         val flow = channel.consumeAsFlow()
@@ -50,7 +54,10 @@ class TrendingListingViewModelTest {
             channel.send(response)
         }
         trendingViewModel.getTrendingRepositoryList()
-        Assert.assertEquals(4, trendingViewModel.TrendingRepositoryState.value)
-        Assert.assertEquals(false, trendingViewModel.TrendingRepositoryState.value)
+        assertNotNull(trendingViewModel.TrendingRepositoryState.value)
+        assertEquals(
+            RepositoryListState.SuccessResponse(retroResponse),
+            trendingViewModel.TrendingRepositoryState.value
+        )
     }
 }

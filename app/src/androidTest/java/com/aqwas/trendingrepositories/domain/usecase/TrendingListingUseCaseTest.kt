@@ -1,7 +1,9 @@
-package com.aqwas.trendingrepositories.usecase
+package com.aqwas.trendingrepositories.domain.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aqwas.trendingrepositories.core.presentation.base.BaseResult
+import com.aqwas.trendingrepositories.domain.mock
+import com.aqwas.trendingrepositories.domain.whenever
 import com.aqwas.trendingrepositories.home.data.responseremote.ModelTrendingRepositoriesRemote
 import com.aqwas.trendingrepositories.home.domain.interactor.TrendingUseCase
 import com.aqwas.trendingrepositories.home.domain.repository.TrendingRepository
